@@ -1,7 +1,6 @@
 # rofi_notes
 Very little script for managing notes with [rofi](https://github.com/DaveDavenport/rofi)
 
-## screenshot
 ![Notes window](https://github.com/lukequaint/rofi_notes/blob/master/screenshots/rofi_notes.png)
 
 ## usage
