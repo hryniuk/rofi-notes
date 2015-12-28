@@ -1,5 +1,5 @@
 # rofi_notes
-Very little script for managing notes with rofi
+Very little script for managing notes with [rofi](https://github.com/DaveDavenport/rofi)
 
 ## usage
 
