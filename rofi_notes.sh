@@ -2,9 +2,7 @@
 
 NOTES_FILE=~/.rofi_notes
 
-if [ ! -a "${NOTES_FILE}" ]
-then
-    touch "${NOTES_FILE}"
+if [[ ! -a "${NOTES_FILE}" ]]; then
     echo "empty" >> "${NOTES_FILE}"
 fi
 
@@ -18,11 +16,10 @@ ALL_NOTES="$(get_notes)"
 NOTE=$( (echo "${ALL_NOTES}")  | rofi -dmenu -p "Note:")
 MATCHING=$( (echo "${ALL_NOTES}") | grep "^${NOTE}$")
 
-if [ -n "${MATCHING}" ]
-then
+if [[ -n "${MATCHING}" ]]; then
     NEW_NOTES=$( (echo "${ALL_NOTES}")  | grep -v "^${NOTE}$" )
 else
-    NEW_NOTES=$(echo -e "${ALL_NOTES}\n${NOTE}")
+    NEW_NOTES=$( (echo -e "${ALL_NOTES}\n${NOTE}") | grep -v "^$")
 fi
 
 echo "${NEW_NOTES}" > "${NOTES_FILE}"
