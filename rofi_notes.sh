@@ -1,6 +1,9 @@
 #!/bin/bash
 
-NOTES_FILE=~/.rofi_notes
+set -u
+set -e
+
+readonly NOTES_FILE=~/.rofi_notes
 
 if [[ ! -a "${NOTES_FILE}" ]]; then
     echo "empty" >> "${NOTES_FILE}"
@@ -11,15 +14,20 @@ function get_notes()
     cat ${NOTES_FILE}
 }
 
-ALL_NOTES="$(get_notes)"
+function main()
+{
+    local all_notes="$(get_notes)"
 
-NOTE=$( (echo "${ALL_NOTES}")  | rofi -dmenu -p "Note:")
-MATCHING=$( (echo "${ALL_NOTES}") | grep "^${NOTE}$")
+    local note=$( (echo "${all_notes}")  | rofi -dmenu -p "Note:")
+    local matching=$( (echo "${all_notes}") | grep "^${note}$")
 
-if [[ -n "${MATCHING}" ]]; then
-    NEW_NOTES=$( (echo "${ALL_NOTES}")  | grep -v "^${NOTE}$" )
-else
-    NEW_NOTES=$( (echo -e "${ALL_NOTES}\n${NOTE}") | grep -v "^$")
-fi
+    if [[ -n "${matching}" ]]; then
+        local new_notes=$( (echo "${all_notes}")  | grep -v "^${note}$" )
+    else
+        local new_notes=$( (echo -e "${all_notes}\n${note}") | grep -v "^$")
+    fi
 
-echo "${NEW_NOTES}" > "${NOTES_FILE}"
+    echo "${new_notes}" > "${NOTES_FILE}"
+}
+
+main
